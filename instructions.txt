@@ -1,0 +1,8 @@
+"b40a370b-1d0a-446b-8c53-d1ecc77765f8" appId
+  "id": "921b0a2f-0fe4-4824-8226-ec0c724eea97"
+
+az role assignment create --role contributor --scope /subscriptions/2e405fb4-a6e2-41c8-8809-9ca54dffc2a4/resourceGroups/TechExcelGHCDB --subscription 2e405fb4-a6e2-41c8-8809-9ca54dffc2a4 --assignee-object-id 921b0a2f-0fe4-4824-8226-ec0c724eea97 --assignee-principal-type ServicePrincipal
+
+az ad app federated-credential create --id b40a370b-1d0a-446b-8c53-d1ecc77765f8 --parameters credentials.json
+
+az ad sp create-for-rbac --name "TechExcelDotNetDeploy" --json-auth --role contributor --scopes /subscriptions/2e405fb4-a6e2-41c8-8809-9ca54dffc2a4
