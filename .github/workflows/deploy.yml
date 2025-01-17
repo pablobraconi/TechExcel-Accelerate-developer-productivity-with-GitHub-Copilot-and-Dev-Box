@@ -1,10 +1,15 @@
-name: Azure Bicep
+name: Azure Bicep-Advanced
 
 on:
-  workflow_dispatch
-
-env:
-  targetEnv: dev
+  workflow_dispatch:
+   inputs:
+    appenv:
+      type: choice
+      description: Choose the target environment
+      options: 
+        - dev
+        - test
+        - prod
 
 jobs:
   build-and-deploy:
@@ -17,9 +22,6 @@ jobs:
     # Checkout code
     - uses: actions/checkout@main
 
-    - name: Print env variables
-        run: echo ${{ env.AZURE_RG }}
-
       # Log into Azure
     - uses: azure/login@v2.1.1
       with:
@@ -29,12 +31,10 @@ jobs:
         enable-AzPSSession: true
 
       # Deploy ARM template
-    
-
     - name: Run ARM deploy
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        resourceGroupName: ${{ env.AZURE_RG }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./src/InfrastructureAsCode/main.bicep
-        parameters: environment=${{ env.targetEnv }}
+        parameters: environment=${{ github.event.inputs.appenv }}
