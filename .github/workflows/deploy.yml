@@ -25,14 +25,11 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: true
     
-    - run: |
-        echo ${{ env.AZURE_RG }}
-    
       # Deploy ARM template
     - name: Run ARM deploy
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        resourceGroupName: ${{ env.AZURE_RG }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./src/InfrastructureAsCode/main.bicep
         parameters: environment=${{ env.targetEnv }}
