@@ -1,15 +1,10 @@
-name: Azure Bicep-Advanced
+name: Azure Bicep
 
 on:
-  workflow_dispatch:
-   inputs:
-    appenv:
-      type: choice
-      description: Choose the target environment
-      options: 
-        - dev
-        - test
-        - prod
+  workflow_dispatch
+
+env:
+  targetEnv: dev
 
 jobs:
   build-and-deploy:
@@ -37,4 +32,4 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./src/InfrastructureAsCode/main.bicep
-        parameters: environment=${{ github.event.inputs.appenv }}
+        parameters: environment=${{ env.targetEnv }}
