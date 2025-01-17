@@ -17,9 +17,6 @@ jobs:
     # Checkout code
     - uses: actions/checkout@main
 
-    - name: Print env variables
-        run: echo ${{ env.AZURE_RG }}
-
       # Log into Azure
     - uses: azure/login@v2.1.1
       with:
